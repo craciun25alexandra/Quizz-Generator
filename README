@@ -1,0 +1,56 @@
+    Pentru aceasta tema am lucrat cu 3 clase: Answer, Question si Quizz. Pentru generarea id-urilor am folosit variabile statice
+care cresteau la fiecare apelare a constructorului si una simpla, care ii lua valoarea din acel moment. Id ul raspunsurilor este
+pus crescator (daca prima intrebare are 3 raspunsuri, id ul primului raspuns al intrebarii 2 este 4). In constructorul de quizz,
+isCompleted este 'False', urmand sa se schimbe la comanda submit.
+    =create-users=
+    Se verifica lungimea vectorului de argumente pentru a vedea daca s-au introdus corect datele utilizatorului, apoi se cauta
+in fisierul users.txt daca exista deja un utilizator cu acelasi nume. Daca nu exista, se adauga in fisierul users.txt un rand
+cu datele utilizatorului.
+    =create-questions=
+    Se verifica lungimea vectorului de argumente pentru a vedea daca s-au introdus corect datele intrebarii, apoi se cauta in
+fisierul users.txt daca exista utilizatorul ce vrea sa creeze intrebarea. In caz afirmativ, se cauta in question.txt daca exista
+deja o intrebare cu acelasi nume. Daca nu exista, prin lungimea vectorului de argumente se verifica daca numarul de raspunsuri
+este corect, daca intrebarea are un text si daca este de tipul single, se cauta prin raspunsuri si se numara cate raspunsuri
+corecte au fost introduse. Apoi, cat timp exista input care sa contina raspunsuri, se creeaza o lista de raspunsuri (nume si
+valoare de adevar) si se verifica la fiecare pas daca mai exista in lista un raspuns cu aceleasi nume. Se verifica cu un for
+din 2 in 2, aceasta fiind ordinea in care se introduc raspunsurile prin args. Iterand prin args, se verifica apoi ca fiecare
+raspuns sa aiba flag si nume, parcurgandu-se asemenea din 2 in 2. La final se creeaza un obiect de tip question cu nume, tip si
+lista de raspunsuri si se adauga in fisierul question.txt stringul rezultat din metoda toString(suprascrisa in mod convenabil,
+pentru a desparti atributele in functie de "'").
+    =get-question-id-by-text=, =get-all-questions=, =get-quizz-by-name=, =get-all-quizzes=
+    Dupa verificarile de username si parola, se cauta in fisierul question.txt/quizzes.txt.
+    =clean-up=
+    Se sterg toate informatiile din fisiere, scriindu-se "" si se seteaza toate variabile statice de tip ID ale claselor la 0.
+    =create-quizz=
+    Dupa verificarile de login, si cele in fisierul quizzes pentru a nu exista deja un quizz cu acelasi nume, se cauta printr-un
+for in args daca intrebarile date exista in question.txt(prin id) si se creeaza o lista de raspunsuri, care se va adauga la lista
+de intrebari. Se creeaza apoi un obiect de tip quizz si se adauga in quizzes.txt prin toString().
+    =get-quizz-details-by-id=
+    Se fac verificarile de login si se cauta prin fisier detaliile specifice.
+    =submit-quizz=
+    Dupa verificarile de login, de existenta quizzului si cele ce tin de corectitudinea raspunsurilor date, se va crea un fisier
+temporar, intrucat isCompleted pentru quizzul gasit trebuie modificat din False in True(se va copia tot continutul din quizzes,
+mai putin valoarea False, care se va modifica cu True, iar apoi fisierul quizzes se va sterge si cel temporar va fi redenumit
+quizzes -in cazul in care submit nu intampina alte erori cum ar fi sa nu existe quizzul sau sa fie dat de catre cel ce l-a creat)
+Pentru calcularea punctelor, am creat o lista in care retin punctajele pe intrebare si iterez in linia quizzului cat timp am
+raspunsuri ca input si nu depasesc length ul liniei quizzului. Exista 2 cazuri, anume daca intrebarea este single sau multiple.
+In primul caz, caut id ul raspunsului: daca exista si are valoarea true in quizz, se acorda 100p, daca are false, -100 puncte,
+si se trece la answer ul urmator dat ca input, iar daca nu este gasit se acorda 0 puncte, caci nu a raspuns la intrebare(id urile
+sunt crescatoare) si se pastreaza acest raspuns la verificarea urmatoarei intrebari. Daca intrebarea este multiple, se parcurge
+intrebarea pozitie cu pozitie(argumentele despartite de '), se numara raspunsurile corecte/gresite in functie de intalnirea
+stringului "true"/"false", iar daca id ul este gasit in raspunsuri, se verifica daca raspunsul este corect sau gresit, se
+incrementeaza usercorrect/userincorrect si se trece la urmatorul raspuns dat ca input. La final, punctajul intrebarii este egal
+cu 100*(usercorrect/anscorrect - userincorrect/ansincorrect) si se adauga la lista de punctaje. In functie de ponderea intrebarii
+se calculeaza finalul, care se pune in fisierul solutions.txt, alaturi de numele utilizatorului si id ul quizzului pe care l-a completat.
+    =delete-quizz-by-id=
+    Asemanator metodei anterioare, se cauta in quizzes.txt, se copiaza intr un file temporar toate quizzurile, mai putin cel cu id ul dat,
+se sterge fisierul quizzes si se redenumeste cel temporar.
+    =get-quizz-solution=
+    Se cauta in solutions.txt si se afiseaza.
+BONUS:
+    Id urile raspunsurilor sa nu fie in ordine crescatoare(ar trebui parcursa de mai multe ori intrebarea cu multiple choices)
+    Un user nu ar trebui sa raspunda la un quizz care nu a fost creat de el, dar contine intrebari create de el(ar trebui un
+atribut suplimentar in questions)
+    Introducerea unor username uri invalide(numere, caractere speciale)
+    Introducerea unei parola care sa respecte anumite criterii(sa aiba minim o majuscula, o cifra)
+
